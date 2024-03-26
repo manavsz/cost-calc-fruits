@@ -73,5 +73,5 @@ if data_str:
 
     encoded_str = urllib.parse.quote_plus(data_str.replace('\n', '%0a'))
 
-    st.link_button('Send on WhatsApp', url=f'https://wa.me/?text={encoded_str}')
+    st.link_button('Send on WhatsApp', url=f'whatsapp://send?text={encoded_str}')
 
