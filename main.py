@@ -2,6 +2,9 @@ import streamlit as st
 import datetime
 import urllib.parse
 
+st.header('GT Trading Co.')
+st.divider()
+
 date = st.date_input('Date', value=datetime.datetime.today(), format='DD/MM/YYYY')
 vn = st.text_input('Vehicle No.')
 pname = st.text_input('Party Name')
@@ -60,14 +63,15 @@ def calculate():
     return data_str
 
 data_str = st.button('Calculate', on_click=calculate)
+st.divider()
 
 if data_str:
     data_str = calculate()
     st.empty()
 
-    st.write(data_str)
+    st.success(data_str)
 
-    encoded_str = urllib.parse.quote_plus(data_str.replace('\n', '%0A'))
+    encoded_str = urllib.parse.quote_plus(data_str.replace('\n', '%0a'))
 
     st.link_button('Send on WhatsApp', url=f'https://wa.me/?text={encoded_str}')
 
