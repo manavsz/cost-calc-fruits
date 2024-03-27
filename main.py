@@ -57,7 +57,7 @@ def calculate():
     data_str = ''
 
     data_str += date.strftime('%d/%m/%Y') + '\n' + vn + '\n' + pname + '\n' + iname + '\n' + i_str
-    data_str += '\n\n\n'
+    data_str += '\n\n'
     data_str += 'Total = ' + str(total) + '\nBoxes = ' + str(total_boxes) + '\nCommision = (-) ' + str(comm) + '\nFreight = (-) '+ str(f_cost) + '\nExpense = (-) '+ str(e_cost) + '\nPost = (-) '+ str(post) + '\nFinal Amount = ' + str(final_amt) + '\n\n\nGT Trading Co.'
 
     return data_str
@@ -80,5 +80,5 @@ if data_str:
     encoded_str = encoded_str.replace('-', '%2D')
     encoded_str = encoded_str.replace('/', '%2F')
 
-    st.link_button('Send on WhatsApp', url=f'whatsapp://send?text={encoded_str}')
+    st.link_button('Send on WhatsApp', url=f'https://wa.me/?text={encoded_str}')
 
