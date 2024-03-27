@@ -69,9 +69,16 @@ if data_str:
     data_str = calculate()
     st.empty()
 
-    st.success(data_str)
+    st.code(data_str)
 
-    encoded_str = urllib.parse.quote_plus(data_str.replace('\n', '%0a'))
+    encoded_str = data_str.replace('@','%40')
+    encoded_str = encoded_str.replace(' ','%20')
+    encoded_str = encoded_str.replace('\n','%0a')
+    encoded_str = encoded_str.replace('=', '%3D')
+    encoded_str = encoded_str.replace('(', '%28')
+    encoded_str = encoded_str.replace(')', '%29')
+    encoded_str = encoded_str.replace('-', '%2D')
+    encoded_str = encoded_str.replace('/', '%2F')
 
     st.link_button('Send on WhatsApp', url=f'whatsapp://send?text={encoded_str}')
 
