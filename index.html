@@ -35,6 +35,15 @@
         /* Prevent zoom on input focus - iOS needs 16px minimum */
         input, select, textarea { font-size: 16px !important; }
         @media (min-width: 640px) { input, select, textarea { font-size: 14px !important; } }
+        /* Fix iOS date input overflow */
+        input[type="date"] {
+            max-width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        input[type="date"]::-webkit-date-and-time-value {
+            text-align: left;
+        }
         .fade-in { animation: fadeIn 0.3s ease-out; }
         .slide-in { animation: slideIn 0.25s ease-out; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -65,9 +74,9 @@
             <div class="p-4 space-y-4">
 
                 <!-- Date -->
-                <div>
+                <div class="overflow-hidden">
                     <label class="block text-[11px] font-medium text-stone-500 dark:text-stone-400 mb-1 uppercase tracking-wider">Date</label>
-                    <input type="date" id="date" class="w-full h-11 px-3 rounded-lg border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-800 dark:text-stone-200 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent transition-all">
+                    <input type="date" id="date" class="w-full max-w-full h-11 px-3 rounded-lg border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-800 dark:text-stone-200 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent transition-all">
                 </div>
 
                 <!-- Vehicle -->
