@@ -98,14 +98,11 @@
 
                 <!-- Entries -->
                 <div class="pt-2">
-                    <div class="flex justify-between items-center mb-2">
-                        <label class="text-[11px] font-medium text-stone-500 dark:text-stone-400 uppercase tracking-wider">Entries</label>
-                        <button id="addEntryBtn" type="button" class="h-9 px-3 text-sm font-medium text-accent-600 dark:text-accent-400 hover:bg-accent-50 active:bg-accent-100 dark:hover:bg-accent-500/10 dark:active:bg-accent-500/20 rounded-lg transition-colors flex items-center gap-1.5">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14m7-7H5"/></svg>
-                            Add
-                        </button>
+                    <div>
+                        <label class="block text-[11px] font-medium text-stone-500 dark:text-stone-400 mb-1 uppercase tracking-wider">No. of Entries</label>
+                        <input type="number" id="numEntries" value="1" min="1" class="w-full h-11 px-3 rounded-lg border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-800 dark:text-stone-200 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent transition-all">
                     </div>
-                    <div id="entriesContainer" class="space-y-2"></div>
+                    <div id="entriesContainer" class="space-y-2 mt-3"></div>
                 </div>
             </div>
 
@@ -205,34 +202,25 @@
 
         // Entries
         const entriesContainer = document.getElementById('entriesContainer');
-        const addEntryBtn = document.getElementById('addEntryBtn');
-        let entryCount = 0;
+        const numEntriesInput = document.getElementById('numEntries');
 
-        function addEntry() {
-            entryCount++;
-            const row = document.createElement('div');
-            row.className = 'grid grid-cols-[1fr_auto_1fr_auto] items-center gap-2 entry-row slide-in';
-            row.innerHTML = `
-                <input type="number" data-qty="${entryCount}" value="" placeholder="Qty" class="w-full h-11 px-3 text-center rounded-lg border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-800 dark:text-stone-200 focus:outline-none focus:ring-2 focus:ring-accent-500 transition-all min-w-0">
-                <span class="text-stone-300 dark:text-stone-600 text-sm px-1">×</span>
-                <input type="number" data-rate="${entryCount}" value="" placeholder="Rate" class="w-full h-11 px-3 text-center rounded-lg border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-800 dark:text-stone-200 focus:outline-none focus:ring-2 focus:ring-accent-500 transition-all min-w-0">
-                <button type="button" class="delete-btn w-11 h-11 flex items-center justify-center rounded-lg text-stone-400 hover:text-red-500 active:text-red-600 hover:bg-red-50 active:bg-red-100 dark:hover:bg-red-500/10 dark:active:bg-red-500/20 transition-colors flex-shrink-0">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
-            `;
-            entriesContainer.appendChild(row);
-            row.querySelector('.delete-btn').addEventListener('click', () => {
-                row.style.opacity = '0';
-                row.style.transform = 'scale(0.95)';
-                setTimeout(() => row.remove(), 150);
-            });
+        function renderEntries() {
+            const num = Math.max(1, parseInt(numEntriesInput.value) || 1);
+            entriesContainer.innerHTML = '';
+            for (let i = 1; i <= num; i++) {
+                const row = document.createElement('div');
+                row.className = 'grid grid-cols-[1fr_auto_1fr] items-center gap-2 entry-row slide-in';
+                row.innerHTML = `
+                    <input type="number" data-qty="${i}" value="" placeholder="Qty" class="w-full h-11 px-3 text-center rounded-lg border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-800 dark:text-stone-200 focus:outline-none focus:ring-2 focus:ring-accent-500 transition-all min-w-0">
+                    <span class="text-stone-300 dark:text-stone-600 text-sm">×</span>
+                    <input type="number" data-rate="${i}" value="" placeholder="Rate" class="w-full h-11 px-3 text-center rounded-lg border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-800 dark:text-stone-200 focus:outline-none focus:ring-2 focus:ring-accent-500 transition-all min-w-0">
+                `;
+                entriesContainer.appendChild(row);
+            }
         }
 
-        addEntryBtn.addEventListener('click', () => {
-            addEntry();
-            entriesContainer.lastElementChild.querySelector('[data-qty]').focus();
-        });
-        addEntry();
+        numEntriesInput.addEventListener('input', renderEntries);
+        renderEntries();
 
         // Calculate
         const calculateBtn = document.getElementById('calculateBtn');
